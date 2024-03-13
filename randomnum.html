@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Number Generator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #result {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+    #generateBtn{
+        border-radius: 10px;
+        background-color: aqua;
+        height: 50px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Random Number Generator</h1>
+
+<button id="generateBtn">Generate Random Number</button>
+<div id="result"></div>
+
+<script>
+document.getElementById('generateBtn').addEventListener('click', function() {
+    var randomNumber = Math.floor(Math.random() * 10) + 1; // Generates random number between 1 and 10
+    document.getElementById('result').innerText = 'Generated Number: ' + randomNumber;
+});
+</script>
+
+</body>
+</html>
