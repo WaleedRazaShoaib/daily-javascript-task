@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rainbow Drawing App</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    #container {
+      text-align: center;
+    }
+    #canvasContainer {
+      margin-top: 20px;
+    }
+    #colorPickers {
+      margin-bottom: 20px;
+    }
+    input[type="color"] {
+      width: 30px;
+      height: 30px;
+      margin: 5px;
+      border: none;
+      padding: 0;
+    }
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="colorPickers">
+      <input type="color" id="color1" value="#FF0000">
+      <input type="color" id="color2" value="#FF7F00">
+      <input type="color" id="color3" value="#FFFF00">
+      <input type="color" id="color4" value="#00FF00">
+      <input type="color" id="color5" value="#0000FF">
+      <input type="color" id="color6" value="#4B0082">
+      <input type="color" id="color7" value="#8F00FF">
+    </div>
+    <div id="canvasContainer">
+      <canvas id="rainbowCanvas" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('rainbowCanvas');
+    const ctx = canvas.getContext('2d');
+    const colors = [];
+
+    // Function to draw rainbow
+    function drawRainbow() {
+      const sectionWidth = canvas.width / colors.length;
+      for (let i = 0; i < colors.length; i++) {
+        ctx.fillStyle = colors[i];
+        ctx.fillRect(i * sectionWidth, 0, sectionWidth, canvas.height);
+      }
+    }
+
+    // Event listener to update colors array
+    document.querySelectorAll('input[type="color"]').forEach(input => {
+      input.addEventListener('change', () => {
+        colors[parseInt(input.id.slice(-1)) - 1] = input.value;
+        drawRainbow();
+      });
+    });
+
+    // Validation: Check if all colors are selected
+    function validateColors() {
+      for (let i = 0; i < colors.length; i++) {
+        if (!colors[i]) {
+          alert('Please select color for all sections of the rainbow.');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Initial draw
+    drawRainbow();
+  </script>
+</body>
+</html>
