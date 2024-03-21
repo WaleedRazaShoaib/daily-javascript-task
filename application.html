@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Name Drawing Application</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  .container {
+    margin-top: 180px;
+    text-align: center;
+  }
+  canvas {
+    margin-top: 20px;
+    border: 2px solid #333;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <form id="nameForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="fontStyle">Font Style:</label>
+    <select id="fontStyle" name="fontStyle" required>
+      <option value="Arial">Arial</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Georgia">Georgia</option>
+    </select>
+    <label for="color">Color:</label>
+    <input type="color" id="color" name="color" required>
+    <button type="submit">Draw Name</button>
+  </form>
+  <canvas id="drawingCanvas" width="400" height="200"></canvas>
+</div>
+
+<script>
+  const form = document.getElementById('nameForm');
+  const canvas = document.getElementById('drawingCanvas');
+  const ctx = canvas.getContext('2d');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const fontStyle = document.getElementById('fontStyle').value;
+    const color = document.getElementById('color').value;
+
+    if (name && fontStyle && color) {
+      drawName(name, fontStyle, color);
+    } else {
+      alert('Please fill in all the fields.');
+    }
+  });
+
+  function drawName(name, fontStyle, color) {
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Set font style
+    ctx.font = `bold 30px ${fontStyle}`;
+    ctx.fillStyle = color;
+
+    // Calculate text width for centering
+    const textWidth = ctx.measureText(name).width;
+
+    // Draw text centered horizontally and vertically
+    const x = (canvas.width - textWidth) / 2;
+    const y = canvas.height / 2;
+    ctx.fillText(name, x, y);
+  }
+</script>
+</body>
+</html>
