@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRUD Application</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .record {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .record img {
+    max-width: 100px;
+    max-height: 100px;
+    margin-right: 10px;
+  }
+  .form-group {
+    margin-bottom: 10px;
+  }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="file"] {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+  .form-group button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>CRUD Application</h1>
+  <div id="records"></div>
+  <h2>Add New Record</h2>
+  <div id="addRecordForm">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="image">Image:</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+    </div>
+    <button onclick="addRecord()">Add Record</button>
+  </div>
+</div>
+
+<script>
+  // Initialize records array
+  let records = [];
+
+  // Check if records exist in session storage
+  if (sessionStorage.getItem('records')) {
+    records = JSON.parse(sessionStorage.getItem('records'));
+    displayRecords();
+  }
+
+  // Function to display records
+  function displayRecords() {
+    const recordsDiv = document.getElementById('records');
+    recordsDiv.innerHTML = '';
+    records.forEach(record => {
+      const recordDiv = document.createElement('div');
+      recordDiv.classList.add('record');
+      const image = document.createElement('img');
+      image.src = record.image;
+      const name = document.createElement('span');
+      name.textContent = record.name;
+      recordDiv.appendChild(image);
+      recordDiv.appendChild(name);
+      recordsDiv.appendChild(recordDiv);
+    });
+  }
+
+  // Function to add a new record
+  function addRecord() {
+    const name = document.getElementById('name').value;
+    const imageFile = document.getElementById('image').files[0];
+    
+    if (name && imageFile) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const image = event.target.result;
+        records.push({ name, image });
+        sessionStorage.setItem('records', JSON.stringify(records));
+        displayRecords();
+        // Clear form fields after adding record
+        document.getElementById('name').value = '';
+        document.getElementById('image').value = '';
+      };
+      reader.readAsDataURL(imageFile);
+    } else {
+      alert('Please fill in all the fields.');
+    }
+  }
+</script>
+</body>
+</html>
