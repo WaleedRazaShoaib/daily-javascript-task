@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagonal Circles Drawing</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  canvas {
+    border: 2px solid #333;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <form id="circleForm">
+    <label for="numCircles">Number of Circles:</label>
+    <input type="number" id="numCircles" name="numCircles" min="1" required>
+    <div id="colorPickers"></div>
+    <button type="submit">Draw Circles</button>
+  </form>
+  <canvas id="drawingCanvas" width="400" height="400"></canvas>
+</div>
+
+<script>
+  const form = document.getElementById('circleForm');
+  const canvas = document.getElementById('drawingCanvas');
+  const ctx = canvas.getContext('2d');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const numCircles = parseInt(document.getElementById('numCircles').value);
+
+    if (numCircles > 0) {
+      drawCircles(numCircles);
+    } else {
+      alert('Please enter a valid number of circles.');
+    }
+  });
+
+  function drawCircles(numCircles) {
+    const circleColors = [];
+    const colorPickersDiv = document.getElementById('colorPickers');
+    colorPickersDiv.innerHTML = ''; // Clear previous color pickers
+
+    // Dynamically generate color pickers for each circle
+    for (let i = 0; i < numCircles; i++) {
+      const colorPicker = document.createElement('input');
+      colorPicker.type = 'color';
+      colorPicker.value = '#000000'; // Default color
+      colorPickersDiv.appendChild(colorPicker);
+      circleColors.push(colorPicker.value);
+    }
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Calculate circle parameters
+    const circleSize = 30;
+    const spacing = 20;
+    const startX = spacing;
+    const startY = canvas.height - spacing;
+    const angleIncrement = Math.PI / (numCircles + 1);
+
+    // Draw circles diagonally
+    for (let i = 0; i < numCircles; i++) {
+      const x = startX + i * (circleSize + spacing);
+      const y = startY - i * (circleSize + spacing);
+      const color = circleColors[i];
+      drawCircle(x, y, circleSize, color);
+    }
+  }
+
+  function drawCircle(x, y, radius, color) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.closePath();
+  }
+</script>
+</body>
+</html>

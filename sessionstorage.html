@@ -70,7 +70,7 @@
   // Initialize records array
   let records = [];
 
-  
+  // Check if records exist in session storage
   if (sessionStorage.getItem('records')) {
     records = JSON.parse(sessionStorage.getItem('records'));
     displayRecords();
