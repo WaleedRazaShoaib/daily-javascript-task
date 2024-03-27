@@ -1,66 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Countdown Timer</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-  }
-  .timer {
-    text-align: center;
-  }
-  .timer-input {
-    margin-bottom: 10px;
-  }
-  .timer-display {
-    font-size: 24px;
-    font-weight: bold;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .timer {
+            text-align: center;
+        }
+
+        .timer-input {
+            margin-bottom: 10px;
+        }
+
+        .timer-display {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-<div class="timer">
-  <h2>Countdown Timer</h2>
-  <div class="timer-input">
-    <label for="datetime">Enter target date and time:</label>
-    <input type="datetime-local" id="datetime" name="datetime">
-  </div>
-  <div class="timer-display" id="timerDisplay"></div>
-</div>
+    <div class="timer">
+        <h2>Countdown Timer</h2>
+        <div class="timer-input">
+            <label for="datetime">Enter target date and time:</label>
+            <input type="datetime-local" id="datetime" name="datetime">
+        </div>
+        <div class="timer-display" id="timerDisplay"></div>
+    </div>
 
-<script>
-  // Function to update the countdown timer
-  function updateTimer() {
-    const now = new Date().getTime();
-    const target = new Date(document.getElementById('datetime').value).getTime();
-    const distance = target - now;
+    <script>
+        // Function to update the countdown timer
+        function updateTimer() {
+            const now = new Date().getTime();
+            const target = new Date(document.getElementById('datetime').value).getTime();
+            const distance = target - now;
 
-    // Calculate days, hours, minutes, and seconds
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Calculate days, hours, minutes, and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Display the countdown timer
-    document.getElementById('timerDisplay').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            // Display the countdown timer
+            document.getElementById('timerDisplay').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-    // If the countdown is over, display "Expired!"
-    if (distance < 0) {
-      document.getElementById('timerDisplay').innerHTML = "Expired!";
-    }
-  }
+            // If the countdown is over, display "Expired!"
+            if (distance < 0) {
+                document.getElementById('timerDisplay').innerHTML = "Expired!";
+            }
+        }
 
-  // Update the countdown timer every second
-  setInterval(updateTimer, 1000);
-</script>
+        // Update the countdown timer every second
+        setInterval(updateTimer, 1000);
+    </script>
 </body>
+
 </html>
