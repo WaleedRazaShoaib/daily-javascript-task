@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Carousel</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  .carousel-container {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    overflow: hidden;
+  }
+  .carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+  }
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .prev {
+    left: 10px;
+  }
+  .next {
+    right: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="carousel-container">
+  <div class="carousel-slide" id="slide1">
+    <img src="https://via.placeholder.com/600x400?text=Slide+1" alt="Slide 1">
+  </div>
+  <div class="carousel-slide" id="slide2">
+    <img src="https://via.placeholder.com/600x400?text=Slide+2" alt="Slide 2">
+  </div>
+  <div class="carousel-slide" id="slide3">
+    <img src="https://via.placeholder.com/600x400?text=Slide+3" alt="Slide 3">
+  </div>
+  <button class="carousel-button prev" onclick="prevSlide()">Prev</button>
+  <button class="carousel-button next" onclick="nextSlide()">Next</button>
+  <button id="pauseButton" class="carousel-button" onclick="toggleAutoplay()">Pause</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.carousel-slide');
+  let currentIndex = 0;
+  let autoplayInterval;
+
+  // Function to show the current slide
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.style.transform = 'translateX(0)';
+      } else {
+        slide.style.transform = 'translateX(-100%)';
+      }
+    });
+  }
+
+  // Function to show the next slide
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  // Function to show the previous slide
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  // Function to toggle autoplay
+  function toggleAutoplay() {
+    const pauseButton = document.getElementById('pauseButton');
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+      pauseButton.textContent = 'Play';
+    } else {
+      autoplayInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+      pauseButton.textContent = 'Pause';
+    }
+  }
+
+  // Start autoplay initially
+  toggleAutoplay();
+</script>
+</body>
+</html>
