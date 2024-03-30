@@ -20,12 +20,19 @@
     width: 600px;
     height: 400px;
     overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
   .carousel-slide {
     position: absolute;
     width: 100%;
     height: 100%;
     transition: transform 0.5s ease;
+  }
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .carousel-button {
     position: absolute;
@@ -36,12 +43,22 @@
     border: none;
     padding: 10px;
     cursor: pointer;
+    border-radius: 50%;
+    outline: none;
+    transition: background-color 0.3s;
+  }
+  .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
   }
   .prev {
     left: 10px;
   }
   .next {
     right: 10px;
+  }
+  #pauseButton {
+    left: 50%;
+    transform: translateX(-50%);
   }
 </style>
 </head>
@@ -56,8 +73,8 @@
   <div class="carousel-slide" id="slide3">
     <img src="https://via.placeholder.com/600x400?text=Slide+3" alt="Slide 3">
   </div>
-  <button class="carousel-button prev" onclick="prevSlide()">Prev</button>
-  <button class="carousel-button next" onclick="nextSlide()">Next</button>
+  <button class="carousel-button prev" onclick="prevSlide()">&#10094;</button>
+  <button class="carousel-button next" onclick="nextSlide()">&#10095;</button>
   <button id="pauseButton" class="carousel-button" onclick="toggleAutoplay()">Pause</button>
 </div>
 
@@ -66,7 +83,6 @@
   let currentIndex = 0;
   let autoplayInterval;
 
-  // Function to show the current slide
   function showSlide(index) {
     slides.forEach((slide, i) => {
       if (i === index) {
@@ -77,19 +93,16 @@
     });
   }
 
-  // Function to show the next slide
   function nextSlide() {
     currentIndex = (currentIndex + 1) % slides.length;
     showSlide(currentIndex);
   }
 
-  // Function to show the previous slide
   function prevSlide() {
     currentIndex = (currentIndex - 1 + slides.length) % slides.length;
     showSlide(currentIndex);
   }
 
-  // Function to toggle autoplay
   function toggleAutoplay() {
     const pauseButton = document.getElementById('pauseButton');
     if (autoplayInterval) {
@@ -102,8 +115,7 @@
     }
   }
 
-  // Start autoplay initially
-  toggleAutoplay();
+  toggleAutoplay(); // Start autoplay initially
 </script>
 </body>
 </html>
