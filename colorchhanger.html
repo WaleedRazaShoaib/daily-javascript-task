@@ -34,21 +34,23 @@
     // Function to generate a random color
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
-        var color = '#';
+        let color = '#';
         for (var i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
     }
+    
 
     // Function to change the background color
     function changeBackgroundColor() {
-        var newColor = getRandomColor();
+        let newColor = getRandomColor();
         document.body.style.backgroundColor = newColor;
     }
 
     // Add event listener to the button
     document.getElementById('changeColorBtn').addEventListener('click', changeBackgroundColor);
+
 </script>
 </body>
 </html>
