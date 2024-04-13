@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Notes</title>  <style>
+    <title>Secure Notes</title>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -57,80 +59,79 @@
         .deleteButton:hover {
             background-color: #ef5858;
         }
-
     </style>
-    
+
 </head>
+
 <body>
     <h1>Secure Notes</h1>
     <input type="text" id="noteInput" placeholder="Enter your note...">
     <button onclick="saveNote()">Save Note</button>
     <div id="notesList"></div>
 
-    <script>// Function to save a note
+    <script>
         function saveNote() {
             const noteInput = document.getElementById("noteInput");
             const noteText = noteInput.value.trim();
-        
+
             if (noteText === "") {
                 alert("Please enter a note.");
                 return;
             }
-        
+
             // Retrieve existing notes from local storage or initialize an empty array
             let notes = JSON.parse(localStorage.getItem("notes")) || [];
-        
+
             // Add the new note to the array
             notes.push(noteText);
-        
+
             // Save the updated notes array back to local storage
             localStorage.setItem("notes", JSON.stringify(notes));
-        
+
             // Clear input field
             noteInput.value = "";
-        
+
             // Refresh the notes display
             displayNotes();
         }
-        
+
         // Function to delete a note
         function deleteNote(index) {
             let notes = JSON.parse(localStorage.getItem("notes")) || [];
-        
+
             // Remove the note at the specified index
             notes.splice(index, 1);
-        
+
             // Save the updated notes array back to local storage
             localStorage.setItem("notes", JSON.stringify(notes));
-        
+
             // Refresh the notes display
             displayNotes();
         }
-        
+
         // Function to display notes
         function displayNotes() {
             const notesList = document.getElementById("notesList");
             notesList.innerHTML = "";
-        
+
             let notes = JSON.parse(localStorage.getItem("notes")) || [];
-        
-            // Display each note along with a delete button
             notes.forEach((note, index) => {
                 const noteItem = document.createElement("div");
                 noteItem.textContent = note;
-        
+
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
                 deleteButton.onclick = () => deleteNote(index);
-        
+
                 noteItem.appendChild(deleteButton);
                 notesList.appendChild(noteItem);
             });
         }
-        
+
         // Display existing notes when the page loads
         displayNotes();
         console.log(noteInput)
-        </script>
+    </script>
 </body>
+
 </html>
